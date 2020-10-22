@@ -18,7 +18,7 @@ public class AstMain
   private static final Logger log = LoggerFactory.getLogger(AstMain.class);
 
   public static void main(String[] args) throws IOException {
-    final String buildFile = "/home/eduard/projects-misc/gradle-tooling/src/main/resources/build.gradle";
+    final String buildFile = "src/main/resources/build.gradle";
     final String text = readFile(buildFile, Charset.defaultCharset());
 
     final List<ASTNode> astNodes = build(text);

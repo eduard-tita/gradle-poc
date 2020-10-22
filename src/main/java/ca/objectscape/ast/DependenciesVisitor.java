@@ -24,7 +24,7 @@ public class DependenciesVisitor extends CodeVisitorSupport
 {
   private static final Logger log = LoggerFactory.getLogger(DependenciesVisitor.class);
 
-  // FIXME collect configurations as well
+  // default compile and runtime configurations
   public String implementationConfig = "implementation";
   public String compileConfig = "compile";
   public String compileOnlyConfig = "compileOnly";
@@ -77,7 +77,7 @@ public class DependenciesVisitor extends CodeVisitorSupport
   @Override
   public void visitArgumentlistExpression( ArgumentListExpression ale )
   {
-    if (isInDependencies()) {
+    if (isInDependencies() && !isInExcludeClause()) {
       log.info("visitArgumentlistExpression: {}", ale.getExpressions());
 
       List<Expression> expressions = ale.getExpressions();
@@ -106,7 +106,7 @@ public class DependenciesVisitor extends CodeVisitorSupport
   @Override
   public void visitMapExpression( MapExpression expression )
   {
-    if (isInDependencies()) {
+    if (isInDependencies() && !isInExcludeClause()) {
       log.info("visitMapExpression: {}", expression);
 
       List<MapEntryExpression> mapEntryExpressions = expression.getMapEntryExpressions();
@@ -142,5 +142,9 @@ public class DependenciesVisitor extends CodeVisitorSupport
 
   boolean isInDependencies() {
     return methodStack.contains("dependencies");
+  }
+
+  boolean isInExcludeClause() {
+    return methodStack.contains("exclude");
   }
 }
