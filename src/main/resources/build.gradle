@@ -1,0 +1,40 @@
+plugins {
+  id 'java'
+}
+
+group 'ca.et'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+configurations {
+  smokeTest.extendsFrom testImplementation
+
+  smokingHotTest.extendsFrom testImplementation, testRuntimeOnly
+}
+
+dependencies {
+  implementation 'org.apache.struts:struts2-core:2.2.1'
+
+  implementation('org.ow2.asm:asm:7.1') {
+    because 'we require a JDK 9 compatible bytecode generator'
+  }
+
+  testImplementation 'junit:junit:4.13'
+
+  smokeTest 'org.apache.httpcomponents:httpclient:4.5.5'
+
+  smokingHotTest group: 'org.springframework', name: 'spring-api', version: '2.5'
+
+  runtimeOnly 'org.springframework:spring-core:2.5',
+      'org.springframework:spring-aop:2.5'
+
+  runtimeOnly(
+      [group: 'org.springframework', name: 'spring-web', version: '3.5'],
+      [group: 'org.springframework', name: 'spring-mvc', version: '3.5']
+  )
+}
