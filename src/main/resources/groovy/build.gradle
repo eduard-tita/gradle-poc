@@ -20,7 +20,13 @@ configurations {
   implementation.exclude group: 'org.slf4j', module: 'slf4j-api'
 }
 
+ext {
+  springVersion = '5.0.3.RELEASE'
+}
+
 dependencies {
+  compile  "org.springframework:spring-context:$springVersion" // FIXME not working yet
+
   implementation 'org.apache.struts:struts2-core:2.2.1'
 
   implementation('org.slf4j:slf4j-core:1.20') {

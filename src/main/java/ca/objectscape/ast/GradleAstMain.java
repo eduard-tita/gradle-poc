@@ -21,18 +21,16 @@ public class GradleAstMain
     final String buildFile = "src/main/resources/groovy/build.gradle";
     final String text = readFile(buildFile, Charset.defaultCharset());
 
-    final List<ASTNode> astNodes = build(text);
-    DependenciesVisitor visitor = new DependenciesVisitor();
-    walkScript(astNodes, visitor);
+    final BuildFileProcessor processor = new BuildFileProcessor(text);
 
+    final List<ModuleDependency> dependencies = processor.collectDependencies();
     log.info(" --------------------------- ");
-    final List<ModuleDependency> dependencies = visitor.getDependencies();
     for (ModuleDependency dependency : dependencies) {
       log.info("dependency: {}", dependency);
     }
 
     log.info(" --------------------------- ");
-    log.info("configurationMap: {}", visitor.getConfigurationMap());
+    log.info("configurationMap: {}", processor.collectConfigurations());
   }
 
   static void walkScript(List<ASTNode> nodes, GroovyCodeVisitor visitor)

@@ -5,7 +5,7 @@ public class ModuleDependency
   public String group;
   public String name;
   public String version;
-  public String configuration;
+  public String configurationName;
 
   public int lineNumber = -1;
   public int columnNumber = -1;
@@ -18,7 +18,7 @@ public class ModuleDependency
         "group='" + group + '\'' +
         ", name='" + name + '\'' +
         ", version='" + version + '\'' +
-        ", configuration='" + configuration + '\'' +
+        ", configurationName='" + configurationName + '\'' +
         ", lineNumber=" + lineNumber +
         ", columnNumber=" + columnNumber +
         ", lastLineNumber=" + lastLineNumber +
