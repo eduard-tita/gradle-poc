@@ -6,10 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.codehaus.groovy.ast.ASTNode;
-import org.codehaus.groovy.ast.GroovyCodeVisitor;
-import org.codehaus.groovy.ast.builder.AstBuilder;
-import org.codehaus.groovy.control.MultipleCompilationErrorsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,24 +29,10 @@ public class GradleAstMain
     log.info("configurationMap: {}", processor.collectConfigurations());
   }
 
-  static void walkScript(List<ASTNode> nodes, GroovyCodeVisitor visitor)
-  {
-    for( ASTNode node : nodes )
-    {
-      node.visit( visitor );
-    }
-  }
-
   static String readFile(String path, Charset encoding)
       throws IOException
   {
     byte[] encoded = Files.readAllBytes(Paths.get(path));
     return new String(encoded, encoding);
-  }
-
-  static List<ASTNode> build(String scriptContents) throws MultipleCompilationErrorsException
-  {
-    AstBuilder builder = new AstBuilder();
-    return builder.buildFromString( scriptContents );
   }
 }
